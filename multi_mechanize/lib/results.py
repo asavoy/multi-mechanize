@@ -74,7 +74,7 @@ def timer_table_vals(timer, interval_secs):
 def output_results(results_dir, results_file, run_time, rampup, ts_interval, user_group_configs=[]):
     from jinja2 import Template
     from jinja2 import Environment, PackageLoader
-    env = Environment(loader=PackageLoader('multi-mechanize', 'multi_mechanize/lib/templates'))
+    env = Environment(loader=PackageLoader('multi_mechanize', 'lib/templates'))
     template = env.get_template('results_template.html')
     template_vars=dict()
     
