@@ -21,8 +21,8 @@ import subprocess
 import sys
 import threading
 import time
-import lib.results as results
-import lib.progressbar as progressbar        
+import multi_mechanize.lib.results as results
+import multi_mechanize.lib.progressbar as progressbar        
 
 usage = 'Usage: %prog <project name> [options]'
 parser = optparse.OptionParser(usage=usage)
@@ -37,7 +37,7 @@ except IndexError:
     sys.stderr.write('example: python multi-mechanize.py default_project\n\n')
     sys.exit(1)  
 
-scripts_path = 'projects/%s/test_scripts' % project_name
+scripts_path = '%s/test_scripts' % project_name
 if not os.path.exists(scripts_path):
     sys.stderr.write('\nERROR: can not find project: %s\n\n' % project_name)
     sys.exit(1) 
@@ -50,8 +50,8 @@ for f in glob.glob( '%s/*.py' % scripts_path):  # import all test scripts as mod
 
 def main():
     if cmd_opts.port:
-        import lib.rpcserver
-        lib.rpcserver.launch_rpc_server(cmd_opts.port, project_name, run_test)
+        import multi_mechanize.lib.rpcserver as rpcserver
+        rpcserver.launch_rpc_server(cmd_opts.port, project_name, run_test)
     else:  
         run_test()
         
@@ -65,7 +65,7 @@ def run_test(remote_starter=None):
     run_time, rampup, console_logging, results_ts_interval, user_group_configs, results_database, post_run_script = configure(project_name)
     
     run_localtime = time.localtime() 
-    output_dir = time.strftime('projects/' + project_name + '/results/results_%Y.%m.%d_%H.%M.%S/', run_localtime) 
+    output_dir = time.strftime(project_name + '/results/results_%Y.%m.%d_%H.%M.%S/', run_localtime) 
         
     # this queue is shared between all processes/threads
     queue = multiprocessing.Queue()
@@ -120,14 +120,14 @@ def run_test(remote_starter=None):
     print 'created: %sresults.html\n' % output_dir
     
     # copy config file to results directory
-    project_config = os.sep.join(['projects', project_name, 'config.cfg'])
+    project_config = os.sep.join([project_name, 'config.cfg'])
     saved_config = os.sep.join([output_dir, 'config.cfg'])
     shutil.copy(project_config, saved_config)
     
     if results_database is not None:
         print 'loading results into database: %s\n' % results_database
-        import lib.resultsloader
-        lib.resultsloader.load_results_database(project_name, run_localtime, output_dir, results_database, 
+        import multi_mechanize.lib.resultsloader as resultsloader
+        resultsloader.load_results_database(project_name, run_localtime, output_dir, results_database, 
                 run_time, rampup, results_ts_interval, user_group_configs)
     
     if post_run_script is not None:
@@ -147,7 +147,7 @@ def run_test(remote_starter=None):
 def configure(project_name):
     user_group_configs = []
     config = ConfigParser.ConfigParser()
-    config.read( 'projects/%s/config.cfg' % project_name)
+    config.read( '%s/config.cfg' % project_name)
     for section in config.sections():
         if section == 'global':
             run_time = config.getint(section, 'run_time')
