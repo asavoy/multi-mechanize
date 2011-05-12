@@ -37,7 +37,7 @@ except IndexError:
     sys.stderr.write('example: python multi-mechanize.py default_project\n\n')
     sys.exit(1)  
 
-scripts_path = 'projects/%s/test_scripts' % project_name
+scripts_path = '%s/test_scripts' % project_name
 if not os.path.exists(scripts_path):
     sys.stderr.write('\nERROR: can not find project: %s\n\n' % project_name)
     sys.exit(1) 
@@ -65,7 +65,7 @@ def run_test(remote_starter=None):
     run_time, rampup, console_logging, results_ts_interval, user_group_configs, results_database, post_run_script = configure(project_name)
     
     run_localtime = time.localtime() 
-    output_dir = time.strftime('projects/' + project_name + '/results/results_%Y.%m.%d_%H.%M.%S/', run_localtime) 
+    output_dir = time.strftime(project_name + '/results/results_%Y.%m.%d_%H.%M.%S/', run_localtime) 
         
     # this queue is shared between all processes/threads
     queue = multiprocessing.Queue()
@@ -120,7 +120,7 @@ def run_test(remote_starter=None):
     print 'created: %sresults.html\n' % output_dir
     
     # copy config file to results directory
-    project_config = os.sep.join(['projects', project_name, 'config.cfg'])
+    project_config = os.sep.join([project_name, 'config.cfg'])
     saved_config = os.sep.join([output_dir, 'config.cfg'])
     shutil.copy(project_config, saved_config)
     
@@ -147,7 +147,7 @@ def run_test(remote_starter=None):
 def configure(project_name):
     user_group_configs = []
     config = ConfigParser.ConfigParser()
-    config.read( 'projects/%s/config.cfg' % project_name)
+    config.read( '%s/config.cfg' % project_name)
     for section in config.sections():
         if section == 'global':
             run_time = config.getint(section, 'run_time')
