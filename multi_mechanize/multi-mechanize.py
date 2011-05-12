@@ -21,8 +21,8 @@ import subprocess
 import sys
 import threading
 import time
-import lib.results as results
-import lib.progressbar as progressbar        
+import multi_mechanize.lib.results as results
+import multi_mechanize.lib.progressbar as progressbar        
 
 usage = 'Usage: %prog <project name> [options]'
 parser = optparse.OptionParser(usage=usage)
@@ -50,8 +50,8 @@ for f in glob.glob( '%s/*.py' % scripts_path):  # import all test scripts as mod
 
 def main():
     if cmd_opts.port:
-        import lib.rpcserver
-        lib.rpcserver.launch_rpc_server(cmd_opts.port, project_name, run_test)
+        import multi_mechanize.lib.rpcserver as rpcserver
+        rpcserver.launch_rpc_server(cmd_opts.port, project_name, run_test)
     else:  
         run_test()
         
@@ -126,8 +126,8 @@ def run_test(remote_starter=None):
     
     if results_database is not None:
         print 'loading results into database: %s\n' % results_database
-        import lib.resultsloader
-        lib.resultsloader.load_results_database(project_name, run_localtime, output_dir, results_database, 
+        import multi_mechanize.lib.resultsloader as resultsloader
+        resultsloader.load_results_database(project_name, run_localtime, output_dir, results_database, 
                 run_time, rampup, results_ts_interval, user_group_configs)
     
     if post_run_script is not None:
