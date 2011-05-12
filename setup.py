@@ -13,7 +13,7 @@ setup(
 	author_email = "",
 	url = "http://code.google.com/p/multi-mechanize/",
 	download_url = "https://github.com/asavoy/multi-mechanize",
-	install_requires = ['matplotlib', 'mechanize'],
+	install_requires = ['Jinja2', 'matplotlib', 'mechanize'],
 	keywords = ["mechanize", "load-testing"],
         scripts = ["multi_mechanize/multi-mechanize.py"],
         classifiers = [
