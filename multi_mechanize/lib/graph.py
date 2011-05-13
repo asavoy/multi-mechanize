@@ -31,7 +31,7 @@ def resp_graph(lines, points, line_below, boxplots, image_name, timer, dir='./')
     #ax.set_xlabel('Elapsed Time In Test (secs)', size='x-small')
     ax.set_ylabel('Response Time (secs)' , size='x-small')
     ax.grid(True, color='#666666')
-    ax.tick_params(labelsize='x-small')
+    #ax.tick_params(labelsize='x-small')
 
     colors=itertools.cycle(['green','orange','purple'])
     for label, line in lines:
@@ -56,7 +56,7 @@ def resp_graph(lines, points, line_below, boxplots, image_name, timer, dir='./')
     #ax.set_xlabel('Elapsed Time In Test (secs)', size='x-small')
     ax.set_ylabel('Response Time (secs)' , size='x-small')
     ax.grid(True, color='#666666')
-    ax.tick_params(labelsize='x-small')
+    #ax.tick_params(labelsize='x-small')
 
     # Draw the actual timer values behind everything and almost transparent, 
     # just as a backdrop
@@ -86,7 +86,7 @@ def resp_graph(lines, points, line_below, boxplots, image_name, timer, dir='./')
     ax.set_xlabel('Elapsed Time In Test (secs)', size='x-small')
     ax.set_ylabel('Timers Per Second (count)' , size='x-small')
     ax.grid(True, color='#666666')
-    ax.tick_params(labelsize='x-small')
+    #ax.tick_params(labelsize='x-small')
 
     throughput_label, throughputs_dict=line_below
     x_seq = sorted(throughputs_dict.keys())
